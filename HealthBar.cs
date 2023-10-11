@@ -2,11 +2,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class Display : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private Image _buttonAddHealth;
-    [SerializeField] private Image _buttonRemoveHealth;
+    [SerializeField] private Button _buttonAddHealth;
+    [SerializeField] private Button _buttonRemoveHealth;
 
     private Coroutine _coroutine;
     private int _health = 10;
@@ -22,7 +22,7 @@ public class HealthBar : MonoBehaviour
     {
         float targetValue = _healthBar.value - _health;
 
-        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));     
+        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
     }
 
     private IEnumerator TransformHealthLevel(float targetValue)
@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
         {
             _healthBar.value = Mathf.MoveTowards(_healthBar.value, targetValue, Time.deltaTime * _health);
 
-            if(_healthBar.value == targetValue)
+            if (_healthBar.value == targetValue)
                 isWork = false;
 
             yield return null;
