@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Display : MonoBehaviour
+public class Health : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Button _buttonAddHealth;
