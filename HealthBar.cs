@@ -1,22 +1,22 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Display))]
+[RequireComponent(typeof(Health))]
 public class HealthBar : MonoBehaviour
 {
-    private Display _display;
+    private Health _health;
 
     private void Start()
     {
-        _display = GetComponent<Display>();
+        _health = GetComponent<Display>();
     }
 
     public void AppendHealth()
     {
-        _display.AddHealth();
+        _health.AddHealth();
     }
 
     public void DeleteHealth()
     {
-        _display.RemoveHealth();
+        _health.RemoveHealth();
     }
 }
