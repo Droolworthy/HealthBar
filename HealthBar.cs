@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        _health = GetComponent<Display>();
+        _health = GetComponent<Health>();
     }
 
     public void AppendHealth()
