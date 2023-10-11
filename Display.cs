@@ -1,22 +1,53 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(Display))]
-public class HealthBar : MonoBehaviour
+public class Display : MonoBehaviour
 {
-    private Display _display;
+    [SerializeField] private Slider _healthBar;
+    [SerializeField] private Button _buttonAddHealth;
+    [SerializeField] private Button _buttonRemoveHealth;
 
-    private void Start()
+    private Coroutine _coroutine;
+    private int _health = 10;
+
+    public void AddHealth()
     {
-        _display = GetComponent<Display>();
+        float targetValue = _healthBar.value + _health;
+
+        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
     }
 
-    public void AppendHealth()
+    public void RemoveHealth()
     {
-        _display.AddHealth();
+        float targetValue = _healthBar.value - _health;
+
+        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
     }
 
-    public void DeleteHealth()
+    private IEnumerator TransformHealthLevel(float targetValue)
     {
-        _display.RemoveHealth();
+        bool isWork = true;
+
+        while (isWork)
+        {
+            _healthBar.value = Mathf.MoveTowards(_healthBar.value, targetValue, Time.deltaTime * _health);
+
+            if (_healthBar.value == targetValue)
+                isWork = false;
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator ChangeHealthBar(float targetValue)
+    {
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        yield return StartCoroutine(TransformHealthLevel(targetValue));
+
+        if (_healthBar.value == targetValue)
+            StopCoroutine(_coroutine);
     }
 }
