@@ -1,22 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Health))]
 public class HealthBar : MonoBehaviour
 {
-    private Health _health;
+    [SerializeField] private Slider _healthBar;
+    [SerializeField] private Health _health;
 
-    private void Start()
+    private void OnEnable()
     {
-        _health = GetComponent<Health>();
+        _health.HealthChanged += OnHealthChanged;
     }
 
-    public void AppendHealth()
+    private void OnDisable()
     {
-        _health.AddHealth();
+        _health.HealthChanged -= OnHealthChanged;
     }
 
-    public void DeleteHealth()
+    private void OnHealthChanged(float health)
     {
-        _health.RemoveHealth();
+        _healthBar.value = health;
     }
 }
