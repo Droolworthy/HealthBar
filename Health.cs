@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
@@ -10,6 +11,8 @@ public class Health : MonoBehaviour
 
     private Coroutine _coroutine;
     private int _health = 10;
+
+    public event UnityAction<float> HealthChanged;
 
     public void AddHealth()
     {
@@ -42,6 +45,8 @@ public class Health : MonoBehaviour
 
     private IEnumerator ChangeHealthBar(float targetValue)
     {
+        HealthChanged?.Invoke(_healthBar.value);
+
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
