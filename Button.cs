@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Health))]
 public class Button : MonoBehaviour
 {
     [SerializeField] private Image _buttonAddHealth;
