@@ -1,34 +1,29 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private Button _buttonAddHealth;
-    [SerializeField] private Button _buttonRemoveHealth;
 
     private Coroutine _coroutine;
     private int _health = 10;
 
-    public event UnityAction<float> HealthChanged;
-
-    public void AddHealth()
+    public void IncreaseWellness()
     {
         float targetValue = _healthBar.value + _health;
 
         _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
     }
 
-    public void RemoveHealth()
+    public void ReduceWellness()
     {
         float targetValue = _healthBar.value - _health;
 
         _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
     }
 
-    private IEnumerator TransformHealthLevel(float targetValue)
+    private IEnumerator TransformWellnessLevel(float targetValue)
     {
         bool isWork = true;
 
@@ -45,12 +40,10 @@ public class Health : MonoBehaviour
 
     private IEnumerator ChangeHealthBar(float targetValue)
     {
-        HealthChanged?.Invoke(_healthBar.value);
-
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        yield return StartCoroutine(TransformHealthLevel(targetValue));
+        yield return StartCoroutine(TransformWellnessLevel(targetValue));
 
         if (_healthBar.value == targetValue)
             StopCoroutine(_coroutine);
