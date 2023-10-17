@@ -8,10 +8,12 @@ public class Health : MonoBehaviour
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Image _buttonAddHealth;
     [SerializeField] private Image _buttonRemoveHealth;
+    [SerializeField] private HealthBar _healthBand;
 
-    private Coroutine _coroutine;
     private int _health = 10;
+    private Coroutine _coroutine;
 
+    public Coroutine Сoroutine => _coroutine;
     public event UnityAction<float> HealthChanged;
 
     private void Start()
@@ -29,21 +31,7 @@ public class Health : MonoBehaviour
         ReduceWellness();
     }
 
-    private void IncreaseWellness()
-    {
-        float targetValue = _healthBar.value + _health;
-
-        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
-    }
-
-    private void ReduceWellness()
-    {
-        float targetValue = _healthBar.value - _health;
-
-        _coroutine = StartCoroutine(ChangeHealthBar(targetValue));
-    }
-
-    private IEnumerator TransformWellnessLevel(float targetValue)
+    public IEnumerator TransformWellnessLevel(float targetValue)
     {
         bool isWork = true;
 
@@ -58,14 +46,17 @@ public class Health : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeHealthBar(float targetValue)
+    private void IncreaseWellness()
     {
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        float targetValue = _healthBar.value + _health;
 
-        yield return StartCoroutine(TransformWellnessLevel(targetValue));
-
-        if (_healthBar.value == targetValue)
-            StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(_healthBand.ChangeHealthBar(targetValue));
     }
+
+    private void ReduceWellness()
+    {
+        float targetValue = _healthBar.value - _health;
+
+        _coroutine = StartCoroutine(_healthBand.ChangeHealthBar(targetValue));
+    }  
 }
