@@ -5,29 +5,27 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private Image _buttonAddHealth;
-    [SerializeField] private Image _buttonRemoveHealth;
 
     private readonly int _health = 10;
 
-    public event UnityAction<float> HealthChanged;
+    public event UnityAction<float> Changed;
 
     public void AddHealth()
     {
-        IncreaseWellness();
+        Heal();
     }
 
     public void RemoveHealth()
     {
-        ReduceWellness();
+        Damage();
     }
 
-    private void IncreaseWellness()
+    private void Heal()
     {
         ChangeWellness(_health);
     }
 
-    private void ReduceWellness()
+    private void Damage()
     {
         ChangeWellness(-_health);
     }
@@ -36,6 +34,6 @@ public class Health : MonoBehaviour
     {
         float targetValue = _healthBar.value + health;
 
-        HealthChanged?.Invoke(targetValue);
+        Changed?.Invoke(targetValue);
     }
 }
