@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -8,22 +7,12 @@ public class Health : MonoBehaviour
 
     public event UnityAction<float> Changed;
 
-    public void AddHealth()
-    {
-        Heal();
-    }
-
-    public void RemoveHealth()
-    {
-        Damage();
-    }
-
-    private void Heal()
+    public void Heal()
     {
         Changed?.Invoke(_health);
     }
 
-    private void Damage()
+    public void Damage()
     {
         Changed?.Invoke(-_health);
     }
