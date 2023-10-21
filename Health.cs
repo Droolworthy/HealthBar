@@ -4,8 +4,6 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Slider _healthBar;
-
     private readonly int _health = 10;
 
     public event UnityAction<float> Changed;
@@ -22,18 +20,11 @@ public class Health : MonoBehaviour
 
     private void Heal()
     {
-        ChangeWellness(_health);
+        Changed?.Invoke(_health);
     }
 
     private void Damage()
     {
-        ChangeWellness(-_health);
-    }
-
-    private void ChangeWellness(float health) 
-    {
-        float targetValue = _healthBar.value + health;
-
-        Changed?.Invoke(targetValue);
+        Changed?.Invoke(-_health);
     }
 }
