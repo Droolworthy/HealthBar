@@ -22,6 +22,8 @@ public class HealthBar : MonoBehaviour
 
     private void OnHealthChanged(float health)
     {
+        health = _healthBar.value + health;
+
         _coroutine = StartCoroutine(ChangeWellnessBand(health));
     }
 
