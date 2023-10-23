@@ -22,21 +22,10 @@ public class HealthBar : MonoBehaviour
 
     private void OnHealthChanged(float health)
     {
-        float currentHealth = _healthBar.value;
-        float targetValue = currentHealth + health; 
-
-        _coroutine = StartCoroutine(ChangeWellnessBand(targetValue));
-    }
-
-    private IEnumerator ChangeWellnessBand(float targetValue) 
-    {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        yield return StartCoroutine(TransformWellnessLevel(targetValue));
-
-        if (_healthBar.value == targetValue)
-            StopCoroutine(_coroutine);
+        _coroutine = StartCoroutine(TransformWellnessLevel(health));
     }
 
     private IEnumerator TransformWellnessLevel(float targetValue)
@@ -50,7 +39,11 @@ public class HealthBar : MonoBehaviour
             _healthBar.value = Mathf.MoveTowards(_healthBar.value, targetValue, Time.deltaTime * health);
 
             if (_healthBar.value == targetValue)
+            {
                 isWork = false;
+
+                StopCoroutine(_coroutine);
+            }
 
             yield return null;
         }
