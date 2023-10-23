@@ -22,9 +22,9 @@ public class HealthBar : MonoBehaviour
 
     private void OnHealthChanged(float health)
     {
-        health = _healthBar.value + health;
+        float targetValue = _healthBar.value + health; 
 
-        _coroutine = StartCoroutine(ChangeWellnessBand(health));
+        _coroutine = StartCoroutine(ChangeWellnessBand(targetValue));
     }
 
     private IEnumerator ChangeWellnessBand(float targetValue) 
