@@ -1,19 +1,33 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] private Slider _healthBar;
+
     private readonly int _health = 10;
 
     public event UnityAction<float> Changed;
 
     public void Heal()
     {
-        Changed?.Invoke(_health);
+        float targetValue = ChangeWellness(_health);
+
+        Changed?.Invoke(targetValue);
     }
 
     public void Damage()
     {
-        Changed?.Invoke(-_health);
+        float targetValue = ChangeWellness(-_health);
+
+        Changed?.Invoke(targetValue);
+    }
+
+    private float ChangeWellness(float health)
+    {
+        float targetValue = _healthBar.value + health;
+
+        return targetValue;
     }
 }
